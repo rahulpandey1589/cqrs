@@ -1,4 +1,6 @@
-﻿using Cqrs.Application.Queries;
+﻿using Cqrs.Api.Models.Request;
+using Cqrs.Application.Command.CreateTodo;
+using Cqrs.Application.Queries;
 using Cqrs.Application.Queries.GetTodo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +17,7 @@ namespace Cqrs.Api.Controllers
 
         public TodoController(ISender mediator)
         {
-            _mediator = mediator;   
+            _mediator = mediator;
         }
 
 
@@ -33,10 +35,12 @@ namespace Cqrs.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateTodos()
+        public async Task<IActionResult> CreateTodos([FromBody] CreateTodoRequest todoRequest)
         {
-            var todoDto = await _mediator.Send(new GetTodoQuery());
-            return Ok(todoDto);
+            var createTodoCommand = new CreateTodoCommand(Guid.NewGuid(), todoRequest.TodoName);
+            await _mediator.Send(createTodoCommand);
+
+            return CreatedAtAction("","");
         }
 
     }
