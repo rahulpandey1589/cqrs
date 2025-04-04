@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrs.Shared", "Cqrs.Shared\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrs.Domain", "Cqrs.Domain\Cqrs.Domain.csproj", "{DC5050DE-8F0E-4B9B-90FA-4C95B1E4939E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrs.Infrastructure", "cqrs.Infrastructure\Cqrs.Infrastructure.csproj", "{D4D58A48-8A93-4F25-910F-4BD279CDD17A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrs.Infrastructure", "Cqrs.Infrastructure\Cqrs.Infrastructure.csproj", "{D4D58A48-8A93-4F25-910F-4BD279CDD17A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

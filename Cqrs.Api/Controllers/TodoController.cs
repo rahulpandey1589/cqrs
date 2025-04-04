@@ -1,6 +1,5 @@
 ﻿using Cqrs.Api.Models.Request;
 using Cqrs.Application.Command.CreateTodo;
-using Cqrs.Application.Queries;
 using Cqrs.Application.Queries.GetTodo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

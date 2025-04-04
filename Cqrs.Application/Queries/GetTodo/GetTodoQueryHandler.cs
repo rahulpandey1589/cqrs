@@ -13,9 +13,9 @@ namespace Cqrs.Application.Queries.GetTodo
 
 
         public GetTodoQueryHandler(
-            IDbRepository<TodoReadModel> todoDbRepository,
-            IMapper mapper)
-        {
+            IMapper mapper,
+            IDbRepository<TodoReadModel> todoDbRepository)
+         {
             _todoDbRepository = todoDbRepository;
             _mapper = mapper;
         }
@@ -23,9 +23,8 @@ namespace Cqrs.Application.Queries.GetTodo
 
         public async Task<IEnumerable<TodoDTO>> Handle(GetTodoQuery request, CancellationToken cancellationToken)
         {
-
             var todoRm = await _todoDbRepository.GetAllAsync();
-            var todoDto = _mapper.Map<IEnumerable<TodoDTO>>(todoRm);
+            var todoDto = _mapper.Map<List<TodoDTO>>(todoRm);
             return todoDto;
         }
     }
