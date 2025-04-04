@@ -10,24 +10,27 @@ namespace Cqrs.Api
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-
-            builder.Services.Configure<DbSettingModel>(builder.Configuration.GetSection(nameof(DbSettingModel)));
-
-            builder.Services.AddInfrastructureServices(builder.Configuration);
 
             // AutoMapper:
 
             var @assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in @assemblies.Where(x => x.FullName.StartsWith("Cqrs"))) { Console.WriteLine(assembly); }
 
-            //builder.Services.addautoma(assemblies);
+            builder.Services.AddAutoMapper(assemblies);
 
             // MediatR:
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+
+
+            builder.Services.Configure<DbSettingModel>(builder.Configuration.GetSection(nameof(DbSettingModel)));
+
+            builder.Services.AddInfrastructureServices(builder.Configuration);
+
 
             // Add services to the container.
 
