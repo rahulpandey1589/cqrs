@@ -8,8 +8,7 @@ namespace Cqrs.Application.Mappers
     {
         public TodoMappingProfile()
         {
-
-            CreateMap<TodoDTO, TodoReadModel>().ReverseMap();
+            CreateMap<TodoReadModel, TodoDTO>().ReverseMap();
         }
     }
 }
