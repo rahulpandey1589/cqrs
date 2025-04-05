@@ -1,29 +1,31 @@
 ﻿using Cqrs.Application.ReadModels;
+using Cqrs.Domain.Aggregates.TodoAggregates;
+using Cqrs.Domain.Interfaces.Dispatchers;
 using Cqrs.Domain.Interfaces.Repositories;
+using Cqrs.Infrastructure.Repositories;
 using MediatR;
 
 namespace Cqrs.Application.Command.CreateTodo
 {
     public class CreateTodoCommandHandler : IRequestHandler<CreateTodoCommand>
     {
-        private readonly IDbRepository<TodoReadModel> dbRepository;
+        private readonly IDomainEventDispatcher _domainEventDispatcher;
+        private readonly IEventStoreRepository _eventStoreRepository;
 
-        public CreateTodoCommandHandler(IDbRepository<TodoReadModel> dbRepository)
+        public CreateTodoCommandHandler(
+            IDomainEventDispatcher domainEventDispatcher, 
+            IEventStoreRepository eventStoreRepository)
         {
-            this.dbRepository = dbRepository;
+            _domainEventDispatcher = domainEventDispatcher;
+            _eventStoreRepository = eventStoreRepository;
         }
 
-        public Task Handle(CreateTodoCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateTodoCommand request, CancellationToken cancellationToken)
         {
-
-            this.dbRepository.InsertAsync(new TodoReadModel()
-            {
-                TodoName = request.TodoName
-            });
-
-           
-
-            throw new NotImplementedException();
+            var todo = new Todo(request.Id, request.TodoName, false);
+         
+            await _eventStoreRepository.SaveAsync(todo);
+            await _domainEventDispatcher.DispatchEventsAsync(todo);
         }
     }
 }

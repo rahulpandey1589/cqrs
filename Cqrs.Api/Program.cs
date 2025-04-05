@@ -18,10 +18,7 @@ namespace Cqrs.Api
 
             // AutoMapper:
 
-            var @assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (var assembly in @assemblies.Where(x => x.FullName.StartsWith("Cqrs"))) { Console.WriteLine(assembly); }
-
-            builder.Services.AddAutoMapper(assemblies);
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // MediatR:
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
