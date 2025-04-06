@@ -36,10 +36,10 @@ namespace Cqrs.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateTodos([FromBody] CreateTodoRequest todoRequest)
         {
-            var createTodoCommand = new CreateTodoCommand(Guid.NewGuid(), todoRequest.TodoName);
+                 var createTodoCommand = new CreateTodoCommand(Guid.NewGuid(), todoRequest.TodoName);
             await _mediator.Send(createTodoCommand);
 
-            return CreatedAtAction("","");
+            return CreatedAtAction("CreateTodos", "TodoController");
         }
 
     }

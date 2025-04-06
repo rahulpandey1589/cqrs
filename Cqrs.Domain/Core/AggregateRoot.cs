@@ -4,7 +4,7 @@ public abstract class AggregateRoot
 {
     public Guid Id { get; protected set; }
 
-    private readonly IList<IDomainEvent> _domainEvents = new List<IDomainEvent>();
+    private readonly List<IDomainEvent> _domainEvents = [];
 
     public IReadOnlyCollection<IDomainEvent> GetDomainEvents()
     {
