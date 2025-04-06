@@ -1,3 +1,4 @@
+using Cqrs.Application;
 using Cqrs.Shared.Settings;
 using Cqrs.Infrastructure;
 
@@ -14,10 +15,16 @@ namespace Cqrs.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddApplicationServices();
 
             // AutoMapper:
 
+            var @assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblies.Where(x => x.FullName.StartsWith("Cqrs")))
+            {
+                Console.WriteLine(assembly);
+            }
+            
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // MediatR:
