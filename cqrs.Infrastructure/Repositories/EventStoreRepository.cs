@@ -5,17 +5,8 @@ using EventStore.Client;
 
 namespace Cqrs.Infrastructure.Repositories;
 
-public class EventStoreRepository : IEventStoreRepository
+public class EventStoreRepository(EventStoreClient eventStoreClient) : IEventStoreRepository
 {
-    private readonly EventStoreClient _eventStoreClient;
-
-
-    public EventStoreRepository(EventStoreClient eventStoreClient)
-    {
-        _eventStoreClient = eventStoreClient;
-    }
-
-
     public async Task<T> LoadAsync<T>(Guid aggregateId) where T : AggregateRoot, new()
     {
         if (aggregateId == Guid.Empty)
@@ -23,7 +14,7 @@ public class EventStoreRepository : IEventStoreRepository
 
         var streamName = GetStreamName<T>(aggregateId);
 
-        var readStreamResult = _eventStoreClient.ReadStreamAsync(
+        var readStreamResult = eventStoreClient.ReadStreamAsync(
             Direction.Forwards,
             streamName,
             StreamPosition.Start);
@@ -67,7 +58,7 @@ public class EventStoreRepository : IEventStoreRepository
             eventsToSave.Add(eventData);
         }
 
-        await _eventStoreClient.AppendToStreamAsync(streamName, StreamState.Any, eventsToSave);
+        await eventStoreClient.AppendToStreamAsync(streamName, StreamState.Any, eventsToSave);
     }
 
     private string GetStreamName<T>(Guid aggregateId)

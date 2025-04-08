@@ -1,7 +1,7 @@
-﻿using Cqrs.Domain.Aggregates.TodoAggregates;
+﻿using MediatR;
+using Cqrs.Domain.Aggregates.TodoAggregates;
 using Cqrs.Domain.Interfaces.Dispatchers;
 using Cqrs.Infrastructure.Repositories;
-using MediatR;
 
 namespace Cqrs.Application.Command.ChangeTodo;
 

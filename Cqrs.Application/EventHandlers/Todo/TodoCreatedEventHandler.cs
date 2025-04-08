@@ -4,7 +4,7 @@ using Cqrs.Domain.Events;
 using Cqrs.Domain.Interfaces.Repositories;
 using MediatR;
 
-namespace Cqrs.Application.EventHandlers;
+namespace Cqrs.Application.EventHandlers.Todo;
 
 public class TodoCreatedEventHandler(
     IDbRepository<TodoReadModel> todoRepository,

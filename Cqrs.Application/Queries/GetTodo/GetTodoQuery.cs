@@ -1,5 +1,5 @@
-﻿using Cqrs.Application.DTOs;
-using MediatR;
+﻿using MediatR;
+using Cqrs.Application.DTOs;
 
 namespace Cqrs.Application.Queries.GetTodo
 {
