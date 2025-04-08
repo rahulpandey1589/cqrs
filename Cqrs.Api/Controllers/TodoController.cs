@@ -1,8 +1,9 @@
-﻿using Cqrs.Api.Models.Request;
+﻿using MediatR;
+using Cqrs.Api.Models.Request;
+using Microsoft.AspNetCore.Mvc;
+using Cqrs.Application.Command.ChangeTodo;
 using Cqrs.Application.Command.CreateTodo;
 using Cqrs.Application.Queries.GetTodo;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Cqrs.Api.Controllers
 {
@@ -42,5 +43,18 @@ namespace Cqrs.Api.Controllers
             return CreatedAtAction("CreateTodos", "TodoController");
         }
 
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ChangeTodos(ChangeTodoRequest changeRequest)
+        {
+            var updateTodoCommand =
+                new ChangeTodoCommand(changeRequest.Id, changeRequest.TodoName, changeRequest.IsCompleted);
+
+            await _mediator.Send(updateTodoCommand);
+            return CreatedAtAction("ChangeTodos", "TodoController");
+        }
     }
 }

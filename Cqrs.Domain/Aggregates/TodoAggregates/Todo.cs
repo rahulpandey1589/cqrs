@@ -19,7 +19,18 @@ public class Todo : AggregateRoot
     {
         ApplyChange(new TodoCreateEvent(id, todoName, isCompleted));
     }
-    
+
+    public void Change(string todoName, bool isCompleted)
+    {
+        ApplyChange(new TodoChangeEvent(Id, todoName, isCompleted));
+    }
+
+    public void Delete()
+    {
+        ApplyChange(new TodoDeleteEvent(Id));
+    }
+
+
     protected override void When(IDomainEvent @event)
     {
         switch (@event)
@@ -28,6 +39,16 @@ public class Todo : AggregateRoot
                 Id = e.Id;
                 TodoName = e.TodoName;
                 IsCompleted = e.IsCompleted;
+                break;
+            
+            case TodoChangeEvent e:
+                Id = e.Id;
+                TodoName = e.TodoName;
+                IsCompleted = e.IsCompleted;
+                break;
+            
+            case TodoDeleteEvent e:
+                Id = e.Id;
                 break;
            
         }

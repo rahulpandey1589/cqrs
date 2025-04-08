@@ -12,7 +12,7 @@ public class TodoCreatedEventHandler(
 {
     
     public async Task Handle(TodoCreateEvent notification, CancellationToken cancellationToken)
-    {
+    { 
         var todoDto = mapper.Map<TodoReadModel>(notification);
         await todoRepository.InsertAsync(todoDto);
     }

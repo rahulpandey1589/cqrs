@@ -15,3 +15,4 @@ public class TodoCreateEvent : DomainEvent
     public string TodoName { get; set; }
     public bool IsCompleted { get; set; }   
 }
+
